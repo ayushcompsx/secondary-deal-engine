@@ -2,7 +2,7 @@
 
 Every material assumption in this engine is documented here, and also
 inline in the relevant module's docstring. Nothing below is a silent
-default — each one was a deliberate choice, made explicit so it can be
+default. Each one was a deliberate choice, made explicit so it can be
 challenged or changed.
 
 ## 1. SPV management fee treatment
@@ -39,7 +39,7 @@ ownership.py, or valuation.py.
 
 **Assumption**: `LastRoundValuation.post_money_valuation` and
 `fully_diluted_shares` are both already on a consistent, fully-diluted
-basis — i.e. the valuation already reflects the option pool and all
+basis, meaning the valuation already reflects the option pool and all
 share classes.
 
 **Why this matters**: if the source data is NOT on this consistent
@@ -58,7 +58,7 @@ seller retains after the sale.
 **Why this matters**: blending realized and unrealized value into one
 number is a common source of misleading TVPI figures. If a retained
 position's unrealized value needs to be shown, it should be a
-*separate*, clearly-labelled figure — this is a known extension point,
+*separate*, clearly-labelled figure. This is a known extension point,
 not built in v1.
 
 ## 5. Cash flow validation for XIRR
@@ -77,7 +77,7 @@ module-level variable, not keyed by session or user.
 **Why this matters**: this is intentionally sufficient for a
 single-user demo tool. A multi-user production version would need to
 key the current deal by session ID (or pass it explicitly through the
-agent's tool-calling context) instead of using a shared global — this
+agent's tool-calling context) instead of using a shared global. This
 is a known, deliberate simplification for v1, not an oversight.
 
 ## 7. What's explicitly out of scope for v1

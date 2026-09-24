@@ -1,15 +1,24 @@
 # Secondary & SPV Deal Engine
 
+![Tests](https://img.shields.io/badge/tests-19%20passing-brightgreen)
+![Python](https://img.shields.io/badge/python-3.11%2B-blue)
+![LangChain](https://img.shields.io/badge/agent-LangChain%20%2B%20Ollama-black)
+![License](https://img.shields.io/badge/license-MIT-lightgrey)
+
 A deterministic financial engine for modelling late-stage secondary
-transactions wrapped inside an SPV — the exact deal type described in
+transactions wrapped inside an SPV. It models the exact deal type described in
 Chelsea Square Capital's "What We Do": *"late-stage secondaries, SPVs
 and co-GP vehicles, offered to a small circle of aligned capital."*
 
 A thin AI agent sits on top of the engine to answer plain-English
-questions, but **the agent never calculates anything itself** — every
+questions, but **the agent never calculates anything itself**. Every
 number it states comes from a tested, hand-verified deterministic
 function. See `agent/tools.py` and `ASSUMPTIONS.md` for why this
 separation matters.
+
+---
+
+---
 
 ## What it calculates
 
@@ -21,7 +30,7 @@ engine calculates:
   realized multiple, and realized XIRR (time-aware annualised return)
 - **Ownership**: cap table before and after the transaction, with
   share-conservation enforced (a secondary sale transfers existing
-  shares — it never creates new ones)
+  shares, it never creates new ones)
 - **Buyer side**: whether the secondary price is a premium or
   discount versus the last funding round
 - **SPV / LP side**: management fee, carried interest, net
@@ -87,15 +96,19 @@ python3 -m agent.deal_agent
 
 ## Documentation
 
-- **`FINANCIAL_MODEL.md`** — every formula used, with the hand-worked
+- **`ARCHITECTURE.md`**: component diagram and sequence diagrams
+  (UML-style), with detailed coverage of the LangChain agentic
+  workflow, covering how the LLM selects a tool and why it never calculates
+  a figure itself
+- **`FINANCIAL_MODEL.md`**: every formula used, with the hand-worked
   golden example
-- **`ASSUMPTIONS.md`** — every explicit assumption made (SPV fee
+- **`ASSUMPTIONS.md`**: every explicit assumption made (SPV fee
   treatment, waterfall structure, valuation basis) and why
 
 ## Design principle
 
 The deterministic engine (`domain/`, `calculations/`, `validation/`)
-has zero dependency on AI, the internet, or any external service —
+has zero dependency on AI, the internet, or any external service.
 it's pure, testable Python. The AI agent is an optional layer on top
 that retrieves and explains results; it is never the source of a
 financial figure. This mirrors how a real investment or fund

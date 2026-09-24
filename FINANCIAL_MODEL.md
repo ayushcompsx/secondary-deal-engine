@@ -5,7 +5,7 @@
 A **secondary transaction** transfers *existing* shares from a seller
 to a buyer. It does **not** create new shares. `total_shares_outstanding`
 is identical before and after. This is enforced as a hard invariant in
-`calculations/ownership.py` — if a code change ever caused share
+`calculations/ownership.py`. If a code change ever caused share
 creation during a "secondary" transfer, the relevant test would fail
 immediately.
 
@@ -25,7 +25,7 @@ last_round_price = post_money_valuation / fully_diluted_shares
 `fully_diluted_shares` are both already on a consistent, fully-diluted
 basis (option pool and all share classes included). If the source data
 isn't consistent on this basis, the comparison below will be
-misleading — see ASSUMPTIONS.md.
+misleading. See ASSUMPTIONS.md.
 
 ## 3. Premium / discount
 
@@ -45,7 +45,7 @@ realized_profit        = gross_proceeds − cost_basis_of_shares
 realized_multiple      = gross_proceeds / cost_basis_of_shares
 ```
 
-`realized_multiple` here is calculated **only on the shares sold** —
+`realized_multiple` here is calculated **only on the shares sold**.
 it deliberately does not blend in any unrealized value from shares the
 seller retains, per the project's rule against conflating realized and
 unrealized value.
@@ -61,7 +61,7 @@ XIRR solves for the rate `r` such that:
 where `days_i` is the number of days between `cash_flow_i`'s date and
 the first cash flow's date. Implemented from scratch in
 `calculations/xirr.py` using Newton's method with a bisection fallback
-for robustness — no external financial library required.
+for robustness, with no external financial library required.
 
 **Why XIRR and not plain IRR**: plain IRR assumes evenly-spaced
 periodic cash flows. Real secondary transactions and SPV exits happen
